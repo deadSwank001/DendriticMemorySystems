@@ -1,0 +1,79 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "dendritic-memory"
+version = "0.1.0"
+description = "Bio-inspired persistent memory architecture for large language models: distributed local evaluation, associative retrieval, and provenance-aware storage."
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [{ name = "David Burmeister", email = "davidburm@gmail.com" }]
+keywords = ["llm", "memory", "rag", "retrieval", "provenance", "ai", "nlp"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24",
+    "sentence-transformers>=2.6",
+    "networkx>=3.1",
+    "pydantic>=2.0",
+    "faiss-cpu>=1.7",
+    "tiktoken>=0.5",
+    "python-dateutil>=2.8",
+    "rich>=13.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4",
+    "pytest-cov>=4.1",
+    "mypy>=1.5",
+    "ruff>=0.1",
+    "black>=23.0",
+    "pre-commit>=3.4",
+]
+notebooks = [
+    "jupyter>=1.0",
+    "ipykernel>=6.0",
+    "matplotlib>=3.7",
+    "pandas>=2.0",
+    "seaborn>=0.12",
+]
+openai = ["openai>=1.0"]
+anthropic = ["anthropic>=0.20"]
+
+[project.urls]
+Homepage = "https://github.com/deadSwank001/DendriticMemorySystems"
+Repository = "https://github.com/deadSwank001/DendriticMemorySystems"
+"Bug Tracker" = "https://github.com/deadSwank001/DendriticMemorySystems/issues"
+Documentation = "https://github.com/deadSwank001/DendriticMemorySystems/tree/main/docs"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/dendritic_memory"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov=dendritic_memory --cov-report=term-missing -v"
+
+[tool.ruff]
+line-length = 100
+select = ["E", "F", "I", "N", "UP", "ANN"]
+ignore = ["ANN101", "ANN102"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = false
+ignore_missing_imports = true
+
+[tool.black]
+line-length = 100
+target-version = ["py310"]
