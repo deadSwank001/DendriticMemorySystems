@@ -2,7 +2,6 @@
 
 **Bio-Inspired Persistent Storage, Associative Retrieval, and Synthetic-Cell Design Principles for Large Language Models**
 
-[![CI](https://github.com/deadSwank001/DendriticMemorySystems/actions/workflows/ci.yml/badge.svg)](https://github.com/deadSwank001/DendriticMemorySystems/actions/workflows/ci.yml)
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Status: Research Prototype](https://img.shields.io/badge/status-research--prototype-orange)](docs/concept_note.md)
