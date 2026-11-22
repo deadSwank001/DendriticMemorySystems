@@ -1,0 +1,35 @@
+[
+  {
+    "name": "project decision recall",
+    "query": "What database does the atlas project use?",
+    "project": "atlas",
+    "memories": [
+      {"id": "decision", "content": "The atlas project uses PostgreSQL as its database.", "source_reference": "atlas/decision-1", "confidence": 0.95, "project_tags": ["atlas"]},
+      {"id": "other", "content": "The beacon project uses SQLite as its database.", "source_reference": "beacon/decision-1", "project_tags": ["beacon"]}
+    ],
+    "relevant": {"decision": "atlas/decision-1"},
+    "avoid": []
+  },
+  {
+    "name": "contradiction and source",
+    "query": "What is the release date for atlas?",
+    "project": "atlas",
+    "memories": [
+      {"id": "verified", "content": "The atlas release date is June 15.", "source_reference": "atlas/release-approved", "confidence": 0.95, "verification_status": "user_confirmed", "project_tags": ["atlas"]},
+      {"id": "disputed", "content": "The atlas release date is June 1.", "source_reference": "atlas/old-rumor", "confidence": 0.3, "verification_status": "disputed", "conflict_status": "disputed", "project_tags": ["atlas"]}
+    ],
+    "relevant": {"verified": "atlas/release-approved"},
+    "avoid": ["disputed"]
+  },
+  {
+    "name": "superseded preference",
+    "query": "What language does the beacon project use?",
+    "project": "beacon",
+    "memories": [
+      {"id": "old", "content": "The beacon project uses JavaScript.", "source_reference": "beacon/old", "conflict_status": "superseded", "project_tags": ["beacon"]},
+      {"id": "current", "content": "The beacon project uses TypeScript.", "source_reference": "beacon/current", "confidence": 0.95, "project_tags": ["beacon"]}
+    ],
+    "relevant": {"current": "beacon/current"},
+    "avoid": ["old"]
+  }
+]
