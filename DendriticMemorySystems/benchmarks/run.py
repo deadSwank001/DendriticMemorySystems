@@ -16,14 +16,26 @@ CASES = Path(__file__).with_name("cases.json")
 def evaluate(cases: list[dict], top_k: int, threshold: float) -> dict:
     if top_k < 1:
         raise ValueError("top_k must be at least 1")
+    if not cases:
+        raise ValueError("at least one benchmark case is required")
+    for case in cases:
+        ids = [memory["id"] for memory in case["memories"]]
+        relevant = case["relevant"]
+        avoid = case["avoid"]
+        if not relevant:
+            raise ValueError(f"{case['name']}: expected at least one relevant memory")
+        if len(set(ids)) != len(ids):
+            raise ValueError(f"{case['name']}: memory IDs must be unique")
+        if not set(relevant).issubset(ids) or not set(avoid).issubset(ids):
+            raise ValueError(f"{case['name']}: labels refer to unknown memory IDs")
+        if len(set(avoid)) != len(avoid) or set(relevant) & set(avoid):
+            raise ValueError(f"{case['name']}: avoid IDs must be unique and not relevant")
     results = {}
     for method in ("cosine", "dendritic"):
         details = []
         found_total = relevant_total = avoided_total = avoid_returned = 0
         sourced_total = sourced_correct = 0
         for case in cases:
-            if not case["relevant"]:
-                raise ValueError(f"{case['name']}: expected at least one relevant memory")
             system = DendriticMemorySystem(activation_threshold=threshold)
             # Use the same offline embeddings for both methods and all runs.
             system.embedder.embed = EmbeddingLayer._fallback_embed

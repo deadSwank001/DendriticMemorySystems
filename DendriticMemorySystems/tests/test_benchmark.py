@@ -40,3 +40,17 @@ def test_empty_results_and_invalid_k():
     assert result["dendritic"]["avoid_leak_rate"] is None
     with pytest.raises(ValueError):
         benchmark.evaluate(cases, top_k=0, threshold=0)
+
+
+def test_rejects_bad_case_labels():
+    cases = [{
+        "name": "fixture", "query": "test", "project": "p",
+        "memories": [{"id": "one", "content": "test"}],
+        "relevant": {"missing": "source"}, "avoid": [],
+    }]
+    with pytest.raises(ValueError, match="unknown memory IDs"):
+        benchmark.evaluate(cases, top_k=1, threshold=0)
+    cases[0]["relevant"] = {"one": "source"}
+    cases[0]["avoid"] = ["one"]
+    with pytest.raises(ValueError, match="not relevant"):
+        benchmark.evaluate(cases, top_k=1, threshold=0)
